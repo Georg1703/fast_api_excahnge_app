@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  astapi_app:
+    container_name: fastapi_app_container
+    restart: always
+    build:
+      context: ..
+      dockerfile: ./docker/Dockerfile
+    ports:
+      - "8000:80"
+    volumes:
+      - ../app:/code/app
+    depends_on:
+      - db
+      
+  db:
+    container_name: fastapi_postgres_container
+    image: postgres:latest
+    env_file:
+      - ../.env
+    ports:
+      - 5432:5432
+    volumes:
+      - ./init.sh:/docker-entrypoint-initdb.d/init.sh
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+    driver: local
+
