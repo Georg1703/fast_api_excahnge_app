@@ -6,7 +6,6 @@ from .exchange.routes import router as currency_router
 from .data.currencies import currencies
 from .data.exchange_rates import exchange_rates
 from .fixtures import populate_currency_table, populate_exchange_rate_table
-from .server import get_app
 
 
 @asynccontextmanager
