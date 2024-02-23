@@ -8,13 +8,19 @@ on:
 
 jobs:
 
-  build:
-
+  code-quality:
+    name: Check coding standards
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker compose up --build
-    - name: Check code quality
-      run: poetry run ruff .
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.12
+          cache: poetry
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Check code formatting
+        run: ruff .
